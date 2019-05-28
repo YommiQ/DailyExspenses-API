@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DailyExspenses.Api.Configurations
+namespace DailyExpenses.Api.Configurations
 {
     public static class ConfigureServices
     {

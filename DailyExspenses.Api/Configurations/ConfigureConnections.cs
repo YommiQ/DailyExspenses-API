@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.InteropServices;
 
-namespace DailyExspenses.Api.Configurations
+namespace DailyExpenses.Api.Configurations
 {
     public static class ConfigureConnections
     {
@@ -16,7 +16,7 @@ namespace DailyExspenses.Api.Configurations
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 connection = configuration.GetConnectionString("LocalConnection") ??
-                             "Data Source=DESKTOP-H9LEKDB\\SQLEXPRESS;Initial Catalog=DailyExpenses;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                             "Data Source=DESKTOP-6KQ96MP\\MSSQLSERVER2017;Initial Catalog=DailyExpenses;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             }
 
             services.AddDbContextPool<DailyExpensesContext>(options => options.UseSqlServer(connection));

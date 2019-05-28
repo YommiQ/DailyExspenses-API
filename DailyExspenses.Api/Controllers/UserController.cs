@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DailyExspenses.Api.Controllers
+namespace DailyExpenses.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

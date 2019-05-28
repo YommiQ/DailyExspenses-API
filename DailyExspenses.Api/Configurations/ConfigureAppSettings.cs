@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DailyExspenses.Api.Configurations
+namespace DailyExpenses.Api.Configurations
 {
     public static class ConfigureAppSettings
     {

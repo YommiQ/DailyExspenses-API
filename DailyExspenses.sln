@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyExspenses.Api", "DailyExspenses.Api\DailyExspenses.Api.csproj", "{7AFA3E54-DBF7-4F27-B7A1-A6550ECDCBFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyExpenses.Api", "DailyExspenses.Api\DailyExpenses.Api.csproj", "{7AFA3E54-DBF7-4F27-B7A1-A6550ECDCBFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyExpenses.Domain", "DailyExpenses.Domain\DailyExpenses.Domain.csproj", "{D11CCE3A-0473-40A9-908A-BA0D36B70B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyExpenses.Domain", "DailyExpenses.Domain\DailyExpenses.Domain.csproj", "{D11CCE3A-0473-40A9-908A-BA0D36B70B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyExpenses.DataLayer", "DailyExpenses.DataLayer\DailyExpenses.DataLayer.csproj", "{9525FAEB-A139-487F-8595-A97076C035AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyExpenses.DataLayer", "DailyExpenses.DataLayer\DailyExpenses.DataLayer.csproj", "{9525FAEB-A139-487F-8595-A97076C035AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
