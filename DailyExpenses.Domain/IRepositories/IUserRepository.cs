@@ -7,6 +7,6 @@ namespace DailyExpenses.Domain.IRepositories
     {
         User GetById(Guid id);
         User GetByLoginOrEmail(string value);
-        void Create(User user);
+        void Create(User entity);
     }
 }
