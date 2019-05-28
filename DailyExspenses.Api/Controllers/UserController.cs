@@ -1,46 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using DailyExpenses.Api.Configurations;
+using DailyExpenses.Api.Models;
+using DailyExpenses.Domain;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DailyExpenses.Api.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        // GET: api/User
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly AppSettings _appSettings;
+        private readonly IUserService _userService;
+
+        public UserController(IOptions<AppSettings> appSettings, IUserService userService)
         {
-            return new string[] { "value1", "value2" };
+            _userService = userService;
+            _appSettings = appSettings.Value;
         }
 
-        // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/User
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("Register")]
+        [AllowAnonymous]
+        public IActionResult Register([FromBody] UserRegistrationModel model)
         {
+            // TODO: model validation
+
+            _userService.Create(model.Email, model.Password, model.PasswordConfirm);
+
+            return Ok();
         }
 
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet]
+        [Route("TestAuth")]
+        public IActionResult TestAuth()
         {
+            return Ok(new
+            {
+                IsTest = true,
+                Controller = "UserController",
+                Anonymous = false
+            });
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet]
+        [Route("TestAnon")]
+        [AllowAnonymous]
+        public IActionResult TestAnon()
         {
+            return Ok(new
+            {
+                IsTest = true,
+                Controller = "UserController",
+                Anonymous = true
+            });
         }
     }
 }

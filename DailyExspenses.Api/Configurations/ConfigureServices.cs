@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DailyExpenses.DataLayer.Repositories;
+using DailyExpenses.Domain;
+using DailyExpenses.Domain.IRepositories;
+using DailyExpenses.Domain.Services;
 
 namespace DailyExpenses.Api.Configurations
 {
@@ -10,14 +10,14 @@ namespace DailyExpenses.Api.Configurations
     {
         public static IServiceCollection ConfigureRepositories(this IServiceCollection services)
         {
-            //services.AddScoped<IUserRepository, UserRepository>();        
+            services.AddScoped<IUserRepository, UserRepository>();        
 
             return services;
         }
 
         public static IServiceCollection ConfigureDomainServices(this IServiceCollection services)
         {
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
