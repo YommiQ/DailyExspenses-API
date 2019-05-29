@@ -4,6 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using DailyExpenses.Domain.Entities;
 using DailyExpenses.Domain.IRepositories;
+using DailyExpenses.Domain.ModelMappers;
+using DailyExpenses.Domain.ViewModels;
 
 namespace DailyExpenses.Domain.Services
 {
@@ -38,6 +40,22 @@ namespace DailyExpenses.Domain.Services
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             });
+        }
+
+        public UserViewModel Authenticate(string email, string password)
+        {
+            var user = _repository.GetByLoginOrEmail(email);
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User is not found.");
+            }
+
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                throw new ValidationException("Password is incorrect.");
+            }
+
+            return user.GetViewModel();
         }
 
         #region Private

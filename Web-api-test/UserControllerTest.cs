@@ -13,6 +13,9 @@ namespace Web_api_test
 {
     public class UserControllerTest
     {
+        // TODO: add user to DB to check for exists and to login.
+        // т.к. ломается UserCreation_WhenEmailIsNotExists, если запустить все вместе.
+
         private readonly UserController _userController;
 
         readonly UserRegistrationModel _testUser = new UserRegistrationModel
@@ -22,9 +25,15 @@ namespace Web_api_test
             PasswordConfirm = "test"
         };
 
+        readonly UserLoginModel _userLogin = new UserLoginModel
+        {
+            Email = "test4@test.test",
+            Password = "test"
+        };
+
         public UserControllerTest()
         {
-            IOptions<AppSettings> appSettingsOptions = Options.Create(new AppSettings());
+            IOptions<AppSettings> appSettingsOptions = Options.Create(new AppSettings() { Secret = "testSecret123LalaGoodRight" });
 
             var optionBuilder =
                 new DbContextOptionsBuilder<DailyExpensesContext>().UseInMemoryDatabase("DailyExpenses");
@@ -56,7 +65,17 @@ namespace Web_api_test
 
             IActionResult actionResult = _userController.Register(_testUser);
 
+
             Assert.IsType<BadRequestObjectResult>(actionResult);
+        }
+
+        [Fact]
+        public void UserLogin_WhenAllIsRight()
+        {
+            _userController.Register(_testUser);
+            IActionResult actionResult = _userController.Login(_userLogin);
+
+            Assert.IsType<OkObjectResult>(actionResult);
         }
     }
 }

@@ -1,12 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using DailyExpenses.Api.Configurations;
 using DailyExpenses.Api.Models;
 using DailyExpenses.Domain;
+using DailyExpenses.Domain.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DailyExpenses.Api.Controllers
 {
@@ -29,7 +34,7 @@ namespace DailyExpenses.Api.Controllers
         [AllowAnonymous]
         public IActionResult Register([FromBody] UserRegistrationModel model)
         {
-            // TODO: model validation
+            // TODO: add model validation
             try
             {
                 _userService.Create(model.Email, model.Password, model.PasswordConfirm);
@@ -49,6 +54,42 @@ namespace DailyExpenses.Api.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        [AllowAnonymous]
+        public IActionResult Login([FromBody] UserLoginModel model)
+        {
+            // TODO: add model validation
+            UserViewModel user;
+
+            try
+            {
+                user = _userService.Authenticate(model.Email, model.Password);
+            }
+            catch (Exception e)
+            {
+                // log Exception
+                return StatusCode(500);
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Email, user.Email)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+
+            return Ok(user);
         }
     }
 }
