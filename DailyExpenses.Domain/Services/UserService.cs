@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 using DailyExpenses.Domain.Entities;
@@ -19,12 +20,12 @@ namespace DailyExpenses.Domain.Services
         {
             if (!password.Equals(passwordConfirm))
             {
-                throw new Exception("Passwords are not equal.");
+                throw new ValidationException("Passwords are not equal.");
             }
 
             if (IsExists(email))
             {
-                throw new Exception("Email is already exists.");
+                throw new ValidationException("Email is already exists.");
             }
 
             CreatePasswordHash(password, out var passwordHash, out var passwordSalt);

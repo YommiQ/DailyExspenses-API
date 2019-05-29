@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using DailyExpenses.Api.Configurations;
 using DailyExpenses.Api.Models;
 using DailyExpenses.Domain;
@@ -29,35 +30,25 @@ namespace DailyExpenses.Api.Controllers
         public IActionResult Register([FromBody] UserRegistrationModel model)
         {
             // TODO: model validation
-
-            _userService.Create(model.Email, model.Password, model.PasswordConfirm);
+            try
+            {
+                _userService.Create(model.Email, model.Password, model.PasswordConfirm);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                // log Exception
+                return StatusCode(500);
+            }
 
             return Ok();
-        }
-
-        [HttpGet]
-        [Route("TestAuth")]
-        public IActionResult TestAuth()
-        {
-            return Ok(new
-            {
-                IsTest = true,
-                Controller = "UserController",
-                Anonymous = false
-            });
-        }
-
-        [HttpGet]
-        [Route("TestAnon")]
-        [AllowAnonymous]
-        public IActionResult TestAnon()
-        {
-            return Ok(new
-            {
-                IsTest = true,
-                Controller = "UserController",
-                Anonymous = true
-            });
         }
     }
 }
