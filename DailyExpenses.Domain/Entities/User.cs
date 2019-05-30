@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DailyExpenses.Domain.Entities
 {
@@ -11,5 +12,7 @@ namespace DailyExpenses.Domain.Entities
 
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
+
+        public ICollection<ExpensesTemplate> ExpensesTemplates { get; set; }
     }
 }

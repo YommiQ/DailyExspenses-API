@@ -1,6 +1,6 @@
 ﻿using DailyExpenses.Api.Configurations;
 using DailyExpenses.Api.Controllers;
-using DailyExpenses.Api.Models;
+using DailyExpenses.Api.Models.UserModels;
 using DailyExpenses.DataLayer;
 using DailyExpenses.DataLayer.Repositories;
 using DailyExpenses.Domain.Services;

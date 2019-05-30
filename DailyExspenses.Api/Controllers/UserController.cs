@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using DailyExpenses.Api.Configurations;
-using DailyExpenses.Api.Models;
+using DailyExpenses.Api.Models.UserModels;
 using DailyExpenses.Domain;
 using DailyExpenses.Domain.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -53,6 +53,8 @@ namespace DailyExpenses.Api.Controllers
                 return StatusCode(500);
             }
 
+            // TODO: create a service for sending activation emails to users
+
             return Ok();
         }
 
@@ -90,6 +92,21 @@ namespace DailyExpenses.Api.Controllers
             user.Token = tokenHandler.WriteToken(token);
 
             return Ok(user);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Activate(string activationLink)
+        {
+            // TODO: activate user
+
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            throw new NotImplementedException();
         }
     }
 }

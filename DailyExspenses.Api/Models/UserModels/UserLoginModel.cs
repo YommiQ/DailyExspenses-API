@@ -1,4 +1,4 @@
-﻿namespace DailyExpenses.Api.Models
+﻿namespace DailyExpenses.Api.Models.UserModels
 {
     public class UserLoginModel
     {
